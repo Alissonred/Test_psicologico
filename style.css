@@ -108,6 +108,15 @@ img {
 }
 
 .footer {
-    background-color: #2c3e50;
-    height: 5rem;
+    /* background-color: #2c3e50;
+    height: 5rem; */
+}
+
+.containerGraf{
+border: #2c3e50 solid 2px;
+}
+canvas{
+    width: 1.5rem;
+    height: 8.5rem;
+    z-index: 999999;
 }

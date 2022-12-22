@@ -54,6 +54,7 @@
 //////////////////////////////////////////////////////////////
 
 const questionsContainer= document.querySelector('.questionsContainer')
+const canvasGrafica = document.getElementById('miGrafica').getContext('2d')
 let containerAsk
 let containerOptions
 let umbralQuinestesico=0
@@ -101,52 +102,53 @@ botonEvaluar.textContent='evaluar'
 botonEvaluar.classList.add('btn');
 questionsContainer.append(botonEvaluar)
 
-const evaluarResultados =(e)=>{
-if(e.target.value == 1){
-    console.log('se selecc:a');
-}
-    
-}
 
-botonEvaluar.addEventListener('click', (e)=> {
-    // e.preventDefault()
-    // askCollection.forEach(i=>{
-    //     i.opciones.forEach(j=>{
-    //         console.log(typeof j, 'es j');
-    //     })
-    //     //console.log(i.opciones);
-    // })
-    console.log(e.target.id);
-    console.log(containerOptions, 'es containerOptions');
-})
 
-questionsContainer.addEventListener('click',(e)=> {
-    if(e.target.value == 1){
-        reasignacion(0,0,0)
-        console.log('se selecc:a');
-    }else if (e.target.value == 2){
-        reasignacion(0,0,0)
-        console.log('se selecc:b');
-    }else if (e.target.value == 3){
-        reasignacion(0,0,0)
-        console.log('se selecc:c');
-    }else{
-        console.log('selecciona una opc');
-    }
 
-} )
+
+questionsContainer.addEventListener('click',(e)=> evaluacionOpciones(e) )
+
 
 const reasignacion = (Q,V,A)=>{
     umbralQuinestesico = Q
     umbralVisual = V
     umbralAuditivo = A
+    console.log(umbralQuinestesico,umbralVisual, umbralAuditivo);
 }
 
+const evaluacionOpciones =(e)=>{
+    if(e.target.value == 1){
+        reasignacion(1,0,0)
+        console.log(e.target.name, 'etarget');
+        console.log('se selecc:a');
+    }else if (e.target.value == 2){
+        reasignacion(0,1,0)
+        console.log('se selecc:b');
+        console.log(e.target.name, 'etarget');
+    }else if (e.target.value == 3){
+        reasignacion(0,0,1)
+        console.log('se selecc:c');
+        console.log(e.target.name, 'etarget');
+    }else{
+        console.log('selecciona una opc');
+        console.log(e.target.name, 'etarget');
+    }
 
-//console.log(botonEvaluar,'botonEvaluar');
-// if(/*se selecciona a*/){
+}
 
-// }
-// let umbralQuinestesico=0
-// let umbralVisual=0
-// let umbralAuditivo=0
+const evaluacionGeneral =(umbralQuinestesico, umbralVisual, umbralAuditivo)=>{
+
+    //for each ask sume los valores
+console.log(umbralQuinestesico, umbralVisual, umbralAuditivo, 'a graficar');
+let grafica = new Chart(canvasGrafica, {
+    type:'bar',
+    data:{
+        labels:['Quinestesico', 'Visual', 'Auditivo'],
+        datasets:[{
+            label:'algo',
+            data:[umbralQuinestesico, umbralVisual, umbralAuditivo]
+        }]
+    }
+})
+}
+botonEvaluar.addEventListener('click', evaluacionGeneral(umbralQuinestesico, umbralVisual, umbralAuditivo))
