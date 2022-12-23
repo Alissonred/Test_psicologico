@@ -42,6 +42,7 @@ askCollection.forEach(ask => {
     containerAsk = document.createElement('article')
     containerOptions = document.createElement('section')
     containerOptions.id = `ask${askIndex}`
+    containerOptions.classList = 'containerOpc'
     const enunciadoAsk = document.createElement('p')
     enunciadoAsk.textContent = ask.enunciado
     ask.opciones.forEach(opc => {

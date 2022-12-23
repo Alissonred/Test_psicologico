@@ -42,7 +42,7 @@ li {
 }
 
 .intro {
-    max-width: 40%;
+    max-width: 70%;
 }
 
 .subTitulo {
@@ -122,4 +122,10 @@ canvas{
 }
 .labelOpc{
     display: flex;
+}
+.labelOpc p{
+    margin: 0px;
+}
+.containerOpc{
+    padding-left: 5%;
 }
