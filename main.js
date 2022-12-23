@@ -1,7 +1,6 @@
 
-//////////////////////////////////////////////////////////////
-
 const questionsContainer= document.querySelector('.questionsContainer')
+const resultsWrite = document.querySelector('.about')
 const canvasGrafica = document.getElementById('miGrafica').getContext('2d')
 let containerAsk
 let containerOptions
@@ -10,11 +9,9 @@ let umbralVisual=0
 let umbralAuditivo=0
 let askIndex = 0
 let opcIndex = 0
-let arrayAsk = []
 let arrayOpciones=[]
-let arrayOpcionesNodes=[]
 let checkeado
-let arrayOpcionesCheckeado=[]
+let resultados
 
 class Question {constructor(enunciado, opciones){
     this.enunciado = enunciado,
@@ -47,16 +44,12 @@ askCollection.forEach(ask =>{
         containerOptions.append(opciones)
         arrayOpciones.push(opciones)
     })
-    arrayAsk.push(containerOptions)// para guardar nodos de pregunta en array
     opcIndex = 0
     containerAsk.append(enunciadoAsk,containerOptions)
     questionsContainer.append(containerAsk)
 })
 
-const botonEvaluar = document.createElement('button')
-botonEvaluar.textContent='evaluar'
-botonEvaluar.classList.add('btn');
-questionsContainer.append(botonEvaluar)
+
 
 
 const validationOptions = ()=>{
@@ -69,28 +62,44 @@ const validationOptions = ()=>{
  
 }
 
+// const predominancia= (umbralQuinestesico, umbralVisual, umbralAuditivo)=>{
+//  if(Math.max(umbralQuinestesico, umbralVisual, umbralAuditivo) == umbralQuinestesico){
+//     return 'quinestesico'
+//  }
+//  if(Math.max(umbralQuinestesico, umbralVisual, umbralAuditivo) == umbralVisual){
+//     return 'Visual'
+//  }
+//  if(Math.max(umbralQuinestesico, umbralVisual, umbralAuditivo) == umbralAuditivo){
+//     return 'auditivo'
+//  }
+//  return 'combinación'
+ 
+//  }
 
 questionsContainer.addEventListener('click', ()=> {
     validationOptions()
     evaluacionGeneral(umbralQuinestesico, umbralVisual, umbralAuditivo)
+    //predominancia(umbralQuinestesico, umbralVisual, umbralAuditivo)
     console.log('dentro de evento');
 }) 
-//questionsContainer.addEventListener('click',(e)=> evaluacionOpciones(e) )
 
 
 const evaluacionGeneral =(umbralQuinestesico, umbralVisual, umbralAuditivo)=>{
-
-    //for each ask sume los valores
 console.log(umbralQuinestesico, umbralVisual, umbralAuditivo, 'a graficar');
 let grafica = new Chart(canvasGrafica, {
     type:'bar',
     data:{
         labels:['Quinestesico', 'Visual', 'Auditivo'],
         datasets:[{
-            label:'algo',
-            data:[umbralQuinestesico, umbralVisual, umbralAuditivo]
+            label:'Tipos de aprendizaje',
+            data:[umbralQuinestesico, umbralVisual, umbralAuditivo,0]
         }]
     }
 })
 }
-botonEvaluar.addEventListener('click', evaluacionGeneral(umbralQuinestesico, umbralVisual, umbralAuditivo))
+
+// const title = document.createElement('h2')
+// title.textContent = 'Resultados'
+// const parrafo = document.createElement('p')
+// parrafo.textContent = `Felicidades!!, eres una persona con umbral de aprendizaje ..............., donde predomina el tipo ${predominancia(umbralQuinestesico, umbralVisual, umbralAuditivo)}`
+// resultsWrite.append(title, parrafo)
