@@ -62,6 +62,11 @@ let umbralVisual=0
 let umbralAuditivo=0
 let askIndex = 0
 let opcIndex = 0
+let arrayAsk = []
+let arrayOpciones=[]
+let arrayOpcionesNodes=[]
+let checkeado
+let arrayOpcionesCheckeado=[]
 
 class Question {constructor(enunciado, opciones){
     this.enunciado = enunciado,
@@ -80,6 +85,7 @@ askCollection.forEach(ask =>{
     askIndex++
     containerAsk = document.createElement('article')
      containerOptions = document.createElement('section')
+     containerOptions.id=`ask${askIndex}`
      const enunciadoAsk = document.createElement('p')
      enunciadoAsk.textContent=ask.enunciado
      ask.opciones.forEach(opc =>{
@@ -89,9 +95,11 @@ askCollection.forEach(ask =>{
         opciones.name=`ask${askIndex}`
         opciones.value=opcIndex
         opciones.id=`ask${askIndex}${opcIndex}`
+        opciones.required
         containerOptions.append(opciones)
-        
+        arrayOpciones.push(opciones)
     })
+    arrayAsk.push(containerOptions)// para guardar nodos de pregunta en array
     opcIndex = 0
     containerAsk.append(enunciadoAsk,containerOptions)
     questionsContainer.append(containerAsk)
@@ -103,30 +111,96 @@ botonEvaluar.classList.add('btn');
 questionsContainer.append(botonEvaluar)
 
 
+const algo = ()=>{
+    checkeado = [...arrayOpciones].filter(k=>k.checked == true)// array con lo seleccionado
+    umbralQuinestesico = checkeado.filter(n=>n.value==1).length
+    umbralVisual = checkeado.filter(n=>n.value==2).length
+    umbralAuditivo = checkeado.filter(n=>n.value==3).length
+    console.log(umbralQuinestesico,umbralVisual,umbralAuditivo, ' son los results');
+    console.log(checkeado, 'lo filtrado');
+  /*   arrayOpciones.forEach(n=>{// para todas las opc
+        console.log(n.checked, 'es n');
+
+    }) */
 
 
 
-questionsContainer.addEventListener('click',(e)=> evaluacionOpciones(e) )
+////////////////opc2///////////////////////////////////////////////////////////////////////////
+    // arrayAsk.forEach(i=> { // array de grupo de opc por pregunta
+    //     arrayOpcionesNodes= [...i.childNodes]// conversion a  array con 3 opc
+    
+    // })
+    // console.log(arrayOpcionesNodes,'arrayOpcionesNodes');
+    // checkeado = arrayOpcionesNodes.find(k=>k.checked == true)// busque de las 3opc cual se checkeo
+    //     console.log(checkeado.value, 'checkeado');
+    //     arrayOpcionesCheckeado.push(checkeado)
+    //     // if(checkeado.value == 1){
+    //     //     umbralQuinestesico++
+    //     //     console.log(umbralQuinestesico, 'selecc a');
+    //     // } else if(checkeado.value == 2){
+    //     //     umbralVisual++
+    //     //     console.log(umbralVisual,'selecc b');
+    //     // }else if(checkeado.value == 3){
+    //     //     umbralAuditivo++
+    //     //     console.log(umbralAuditivo,'selecc c');
+    //     // }else{
+    //     //     console.log('selecciona todas');
+    //     // }
+    // console.log(arrayOpcionesCheckeado);
+    // //arrayOpciones.forEach(i=> console.log(i, 'son los hijos'))
+}
+
+const aux = ()=>{
+    
+}
 
 
-const reasignacion = (Q,V,A)=>{
+
+//const secc = document.getElementById(aski)
+
+questionsContainer.addEventListener('click', algo) 
+//questionsContainer.addEventListener('click',(e)=> evaluacionOpciones(e) )
+
+
+
+/////detectar quien se selecc, detectar quien se deselecc
+let arrRtas = []
+const acum =(e)=>{
+    arrRtas.push(e.target.value)/// se seleccionó
+    ////se deselecciono
+    ///sumar los del mismo nombre
+}
+
+
+
+
+
+const reasignacionunitaria = (Q,V,A)=>{
     umbralQuinestesico = Q
     umbralVisual = V
     umbralAuditivo = A
     console.log(umbralQuinestesico,umbralVisual, umbralAuditivo);
 }
 
+const reasignacion = (Q,V,A)=>{
+    umbralQuinestesico += Q
+    umbralVisual += V
+    umbralAuditivo += A
+    console.log(umbralQuinestesico,umbralVisual, umbralAuditivo);
+}
+
 const evaluacionOpciones =(e)=>{
     if(e.target.value == 1){
-        reasignacion(1,0,0)
+        reasignacionunitaria(1,0,0)
         console.log(e.target.name, 'etarget');
+
         console.log('se selecc:a');
     }else if (e.target.value == 2){
-        reasignacion(0,1,0)
+        reasignacionunitaria(0,1,0)
         console.log('se selecc:b');
         console.log(e.target.name, 'etarget');
     }else if (e.target.value == 3){
-        reasignacion(0,0,1)
+        reasignacionunitaria(0,0,1)
         console.log('se selecc:c');
         console.log(e.target.name, 'etarget');
     }else{
